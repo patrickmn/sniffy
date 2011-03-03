@@ -1,0 +1,74 @@
+{{define "proxy_settings_buttons"}}
+    {{template "proxyserver_selector" .}}
+    <hr>
+    <ul>
+	<li><button id="" class="btn">New proxy server</button></li>
+	<li><button id="" class="btn" data-toggle="toggle">New load balancer</button></li>
+	<li><button id="" class="btn">Blah</button></li>
+	<li><button id="" class="btn">Clear</button></li>
+    </ul>
+    <hr>
+    <ul>
+	<li><button id="" class="btn">Button A</button></li>
+	<li><button id="" class="btn">Button B</button></li>
+	<li><button id="" class="btn">Button C</button></li>
+    </ul>
+{{end}}
+
+{{define "proxy_settings_sidebar"}}
+    <div class="sidebar">
+	<div class="well leftfloatbox">
+	    {{template "proxy_settings_buttons" .}}
+        </div>
+    </div>
+    <div class="content">
+{{end}}
+
+{{define "proxy_settings"}}
+    {{with index . 0}}
+    {{template "header"}}
+    {{template "proxy_settings_sidebar" .}}
+    {{with .ps}}
+    <form action="/proxy/settings/edit" method="post" id="edit-proxy-{{.Id}}" class="edit-proxy">
+	<fieldset>
+	    <div class="clearfix">
+		<label for="method">Method</label>
+		<div class="input">
+		    <select id="method" name="method">
+			<option>HEAD</option>
+			<option>GET</option>
+			<option>POST</option>
+			<option>PUT</option>
+			<option>DELETE</option>
+			<option>TRACE</option>
+			<option>OPTIONS</option>
+			<option>CONNECT</option>
+			<option>PATCH</option>
+			<option value="custom">Custom...</option>
+		    </select>
+		    <input id="methodcustom" name="methodcustom" type="text" />
+		</div>
+	    </div>
+	    <div class="clearfix">
+		<label for="url">URL</label>
+		<div class="input">
+		    <textarea id="url" name="url" class="xxlarge">'+r.URL.String+'</textarea>
+		</div>
+	    </div>
+	    <div class="clearfix">
+		<label for="proto">Protocol</label>
+		<div class="input">
+		    <input id="proto" name="proto" type="text" value="'+r.Proto+'" />
+		</div>
+	    </div>
+	    <div class="clearfix">
+		<input id="submitemulate" name="submitemulate" type="submit" class="btn primary" value="Emulate" />
+		<input id="submitview" name="submitview" type="submit" class="btn secondary" value="View" />
+	    </div>
+	</fieldset>
+	<input id="edit" name="edit" type="hidden" value="{{.Id}}" />
+    </form>
+    {{end}}
+    {{end}}
+{{template "footer"}}
+{{end}}

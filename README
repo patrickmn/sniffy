@@ -1,0 +1,12 @@
+Sniffy is a general-purpose and high-performance network gateway, load balancer,
+and proxy server with a wide variety of auditing/security testing features like
+request blocking, interception, moderation, manipulation, cloning, and more.
+
+Use Sniffy as a local proxy and turn on the auditing features to identify
+security and privacy issues on your client or on the server you're testing,
+or just use it as a simple and fast load balancer frontend for your web
+property.
+
+Note: Sniffy is still in pre-alpha, and needs to undergo many radical changes
+before it is even near production-ready. Database schemas, configuration
+settings, and even existing feature are not guaranteed to stay the same.

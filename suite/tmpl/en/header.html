@@ -1,0 +1,67 @@
+{{define "header"}}<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sniffy</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/sniffy.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+    </style>
+
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+    <!-- <link rel="apple-touch-icon" href="images/apple-touch-icon.png"> -->
+    <!-- <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png"> -->
+    <!-- <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png"> -->
+
+    <script src="/static/js/jquery/jquery-1.7.1.js"></script>
+    <!-- <script src="/static/js/jquery/jquery-1.7.1.min.js"></script> -->
+    <!-- <script src="/static/js/jquery/jquery-ui-1.8.16.js"></script> -->
+    <!-- <script src="/static/js/jquery/jquery-ui-1.8.16.min.js"></script> -->
+    <script src="/static/js/jquery/color.js"></script>
+    <script src="/static/js/jquery/url.js"></script>
+    <script src="/static/js/bootstrap-buttons.js"></script>
+    <script src="/static/js/bootstrap-dropdown.js"></script>
+    <script src="/static/js/bootstrap-modal.js"></script>
+    <script src="/static/js/sniffy.js"></script>
+  </head>
+
+  <body>
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="container-fluid">
+	  <nav>
+          <a class="brand" href="/">Sniffy</a>
+          <ul class="nav">
+            <li class="dropdown" data-dropdown="dropdown">
+		<a href="#" class="dropdown-toggle">Auditor</a>
+		<ul class="dropdown-menu">
+		    <li><a href="/auditor">Overview</a></li>
+		    <li><a href="/auditor/configscan">Config scan</a></li>
+		    <li><a href="/auditor/interceptor">Interceptor</a></li>
+		</ul>
+	    </li>
+            <li><a href="/gateway">Gateway</a></li>
+            <li><a href="/loadbalancer">Load Balancer</a></li>
+            <li><a href="/server">Server</a></li>
+            <li><a href="/watcher">Watcher</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/maintenance">Maintenance</a></li>
+          </ul>
+          <p class="pull-right">Logged in as <a href="#">username</a></p>
+	  </nav>
+        </div>
+      </div>
+    </div>
+    <section id="site">
+    <div id="nom" class="container-fluid">
+{{end}}

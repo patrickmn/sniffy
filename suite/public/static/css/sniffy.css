@@ -1,0 +1,81 @@
+/* TODO: Make the modal a parent of the overlay, and give the overlay the overflow
+         Example: https://trello.com/card/board/templates-for-boards/4d5ea62fd76aa1136000000c/4e6fdc349d5bce0000004fa6
+ */
+
+.modal {
+    margin: -350px 0 0 -280px;
+    max-height: 700px;
+    overflow-y: auto;
+}
+
+.modal.top {
+    position: absolute;
+    top: 35%;
+}
+
+.modal.large {
+    width: 700px;
+    margin: -350px 0 0 -350px;
+}
+
+.modal.xlarge {
+    width: 800px;
+    margin: -350px 0 0 -400px;
+}
+
+.modal.xxlarge {
+    width: 900px;
+    margin: -350px 0 0 -450px;
+}
+
+.well.leftfloatbox {
+  position: fixed;
+  top: 60px;
+  left: 20px;
+  /* z-index: 10000; */
+  overflow: visible;
+  width: 180px;
+}
+
+.well.leftfloatbox ul, .well.topbox ul, .well.topfloatbox ul {
+    margin: 0;
+    list-style-type: none;
+}
+
+.well.leftfloatbox ul li {
+    margin-bottom: 10px;
+}
+
+.well.leftfloatbox ul li:last-child {
+    margin-bottom: 0;
+}
+
+.well.leftfloatbox button {
+    width: 100%;
+}
+
+.well.leftfloatbox select {
+    width: 100%;
+}
+
+.well.topfloatbox {
+  position: fixed;
+  top: 60px;
+  height: 30px;
+  z-index: 10000;
+  overflow: visible;
+}
+
+.well.topbox ul, .well.topfloatbox ul {
+    white-space: nowrap;
+}
+
+.well.topbox ul li, .well.topfloatbox ul li {
+    display: inline;
+}
+
+/*
+#requests {
+    font-family: consolas, monospace;
+}
+*/

@@ -1,0 +1,73 @@
+{{define "auditor_interceptor_buttons"}}
+	    {{template "proxyserver_selector" .}}
+	    <hr>
+	    <ul>
+		<li><button id="newrequest" class="btn">New request</button></li>
+		<li><button id="pausepolling" class="btn" data-toggle="toggle">Pause updating</button></li>
+		<li><button id="showhideall" class="btn">Toggle all</button></li>
+		<li><button id="clearrequests" class="btn">Clear</button></li>
+	    </ul>
+	    <hr>
+	    {{with .ps}}
+	    <ul>
+		<li><button id="togglelogrequests" class="btn{{if .LogRequests}} on{{end}}">Log requests</button></li>
+		<li><button id="toggleinterceptssl" class="btn{{if .InterceptSSL}} on{{end}}">Intercept SSL</button></li>
+		<li><button id="togglemoderation" class="btn{{if .ModerateRequests}} on{{end}}">Moderate requests</button></li>
+	    </ul>
+	    {{end}}
+{{end}}
+
+{{define "auditor_interceptor_sidebar"}}
+      <div class="sidebar">
+	  <div class="well leftfloatbox">
+	  {{template "auditor_interceptor_buttons" .}}
+        </div>
+      </div>
+      <div class="content">
+{{end}}
+
+{{define "auditor_interceptor"}}
+{{with index . 0}}
+{{template "header"}}
+{{template "auditor_interceptor_sidebar" .}}
+
+	<script src="/static/js/jquery/tablesorter.min.js"></script>
+        <!-- <div class="hero-unit"> -->
+        <!--   <h1>Auditor</h1> -->
+        <!-- </div> -->
+
+	{{/*}}
+	{{with .ps}}
+	<div class="alert-message block-message info">
+            <p>Configure your application to connect through the HTTP/HTTPS proxy host:{{.Port}} to intercept requests</p>
+	</div>
+	{{end}}
+	{{*/}}
+
+	<table id="requests" class="condensed-table">
+	<thead>
+	    <tr>
+		<th>Time</th>
+		<th>Host</th>
+		<th>Method</th>
+		<th width="75%">URL</th>
+		<!-- <th>URL</th> -->
+		<!-- <th>Proto</th> -->
+		<!-- <th>Header</th> -->
+		<!-- <th>ContentLength</th> -->
+		<!-- <th>TransferEncoding</th> -->
+		<!-- <th>Host</th> -->
+		<!-- <th>RemoteAddr</th> -->
+		<!-- <th>TLS</th> -->
+	    </tr>
+	</thead>
+	<tbody>
+	</tbody>
+	</table>
+
+	<div class="alert-message block-message info">
+            <p>Ad blocking extensions might mistake details on this page about certain URLs as ads and prevent them from showing.</p>
+	</div>
+{{end}}
+{{template "footer"}}
+{{end}}

@@ -1,0 +1,6 @@
+* Update to latest Bootstrap
+
+* Use prepared statements (db.Prepare) instead of strings with
+   queries: http://weekly.golang.org/pkg/database/sql/#DB.Prepare
+
+* Add SSL stripping MITM proxy

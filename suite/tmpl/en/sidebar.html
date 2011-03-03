@@ -1,0 +1,38 @@
+{{define "stdside"}}
+      {{template "sidebar"}}
+      <div class="content">
+{{end}}
+
+{{define "sidebar"}}
+      <div class="sidebar">
+        <div class="well">
+	  <nav>
+              <h5>Auditor</h5>
+              <ul>
+		  <li><a href="/auditor/configscan">Config scan</a></li>
+		  <li><a href="/auditor/interceptor">Interceptor</a></li>
+              </ul>
+              <h5>Gateway</h5>
+              <ul>
+		  <li><a href="#">Link</a></li>
+		  <li><a href="#">Link</a></li>
+              </ul>
+              <h5>Load Balancer</h5>
+              <ul>
+		  <li><a href="#">Link</a></li>
+		  <li><a href="#">Link</a></li>
+              </ul>
+              <h5>Server</h5>
+              <ul>
+		  <li><a href="#">Link</a></li>
+		  <li><a href="#">Link</a></li>
+              </ul>
+              <h5>Watcher</h5>
+              <ul>
+		  <li><a href="#">Link</a></li>
+		  <li><a href="#">Link</a></li>
+              </ul>
+	  </nav>
+	</div>
+      </div>
+{{end}}

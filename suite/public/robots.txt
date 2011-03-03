@@ -1,0 +1,5 @@
+# Robots.txt file for Sniffy
+#
+
+User-agent: *
+Disallow: /ajax/
