@@ -3,7 +3,6 @@ package proxy
 import (
 	"github.com/pmylund/sniffy/common"
 
-	"errors"
 	"fmt"
 	"io"
 	"net"
@@ -17,10 +16,6 @@ const (
 )
 
 var (
-	ErrNotFollowingRedirect = errors.New("Not following redirect")
-	checkRedirectFunc       = func(req *http.Request, via []*http.Request) error {
-		return ErrNotFollowingRedirect
-	}
 	DefaultConnectResponseHeader = []byte("HTTP/1.1 200 Connection established\r\nProxy-agent: " + DefaultProxyAgent + "\r\n\r\n")
 )
 
@@ -62,9 +57,6 @@ func (ps *ProxyServer) getServer() (*http.Server, error) {
 		noEnvProxy bool
 		err        error
 	)
-	ps.client = &http.Client{
-		CheckRedirect: checkRedirectFunc,
-	}
 	if ps.UseEnvProxy && ps.ProxyLoopTestUrl != "" {
 		noEnvProxy, err = CheckProxyLoop(ps.Port, ps.ProxyLoopTestUrl)
 		if err != nil {
@@ -73,8 +65,11 @@ func (ps *ProxyServer) getServer() (*http.Server, error) {
 	} else {
 		noEnvProxy = true
 	}
+	ps.client = new(http.Client)
 	if noEnvProxy {
 		ps.client.Transport = &http.Transport{Proxy: nil}
+	} else {
+		ps.client.Transport = http.DefaultTransport
 	}
 	if ps.ProxyAgent != "" {
 		ps.ConnectResponseHeader = []byte("HTTP/1.1 200 Connection established\r\nProxy-agent: " + ps.ProxyAgent + "\r\n\r\n")
@@ -167,11 +162,7 @@ func (s *ProxySession) GetResponse() error {
 		}
 		delete(s.Request.Header, "Proxy-Connection")
 	}
-	res, err := s.Ps.client.Do(s.Request)
-	// TODO: What error to check for here? It's wrapped in a http err, not ErrNotFollowingRedirect
-	if err != nil && strings.HasSuffix(err.Error(), ": Not following redirect") {
-		err = nil
-	}
+	res, err := s.Ps.client.Transport.RoundTrip(s.Request)
 	s.Response = res
 	s.Got = true
 	return err
@@ -190,6 +181,7 @@ func (s *ProxySession) Do() error {
 			return fmt.Errorf("Could not perform GetResponse: %s", err)
 		}
 	}
+	fmt.Println("RESPONSE: %v", s.Response) // TEMP
 	h := s.W.Header()
 	for k, v := range s.Response.Header {
 		h[k] = v

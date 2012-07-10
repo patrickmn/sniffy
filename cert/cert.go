@@ -64,11 +64,12 @@ func GenerateRSAKeyPair(c, k string, bits int, cn string, org []string, sn *big.
 			CommonName:   cn,
 			Organization: org,
 		},
-		NotBefore:    now.Add(-2 * 24 * time.Hour).UTC(),
-		NotAfter:     now.Add(time.Hour * 24 * 365 * 10).UTC(), // valid for 10 years.
-		IsCA:         isCA,
-		SubjectKeyId: []byte{1, 2, 3, 4},
-		KeyUsage:     x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature,
+		NotBefore:             now.Add(-2 * 24 * time.Hour).UTC(),
+		NotAfter:              now.Add(time.Hour * 24 * 365 * 10).UTC(), // valid for 10 years.
+		BasicConstraintsValid: isCA,
+		IsCA:                  isCA,
+		SubjectKeyId:          []byte{1, 2, 3, 4},
+		KeyUsage:              x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature,
 	}
 	if parent == nil {
 		parent = &template
