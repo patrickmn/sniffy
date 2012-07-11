@@ -83,11 +83,6 @@ func (ps *ProxyServer) getServer() (*http.Server, error) {
 	return &srv, nil
 }
 
-// should be allowedproxyhost middleware
-// } else {
-// 	http.Error(w, "This client is not allowed to use this proxy server", http.StatusServiceUnavailable)
-// }
-
 func (ps *ProxyServer) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	req.URL.Scheme = strings.ToLower(req.URL.Scheme) // Curl does "HTTP://" for some reason
 	s := &ProxySession{
@@ -98,12 +93,10 @@ func (ps *ProxyServer) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	ps.Handler.(ProxyHandler).HandleProxy(s)
 }
 
-// for dial err: http.Error(w, "A connection to the remote host could not be established", http.StatusServiceUnavailable)
 func (ps *ProxyServer) ProxyCONNECT(w http.ResponseWriter, req *http.Request) error {
-	addr := req.URL.String()
-	dest, err := net.Dial("tcp", addr)
+	dest, err := net.Dial("tcp", req.URL.Host)
 	if err != nil {
-		return fmt.Errorf("Error establishing SSL connection to %s: %s", addr, err)
+		return fmt.Errorf("Error establishing SSL connection to %s: %s", req.URL.Host, err)
 	}
 	c, _, err := w.(http.Hijacker).Hijack()
 	if err != nil {
