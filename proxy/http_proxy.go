@@ -126,7 +126,6 @@ type ProxySession struct {
 	Response *http.Response
 	Ps       *ProxyServer
 	W        http.ResponseWriter
-	Got      bool
 }
 
 // GetResponse performs the client's request, setting s.Response, and returning an error,
@@ -164,7 +163,6 @@ func (s *ProxySession) GetResponse() error {
 	}
 	res, err := s.Ps.client.Transport.RoundTrip(s.Request)
 	s.Response = res
-	s.Got = true
 	return err
 }
 
@@ -175,13 +173,12 @@ func (s *ProxySession) Do() error {
 	if s.Request.Method == "CONNECT" {
 		return s.Ps.ProxyCONNECT(s.W, s.Request)
 	}
-	if !s.Got {
+	if s.Response == nil {
 		err := s.GetResponse()
 		if err != nil {
 			return fmt.Errorf("Could not perform GetResponse: %s", err)
 		}
 	}
-	fmt.Println("RESPONSE: %v", s.Response) // TEMP
 	h := s.W.Header()
 	for k, v := range s.Response.Header {
 		h[k] = v
@@ -193,7 +190,9 @@ func (s *ProxySession) Do() error {
 		}
 	}
 	s.W.WriteHeader(s.Response.StatusCode)
-	io.Copy(s.W, s.Response.Body)
+	if s.Response.Body != nil {
+		io.Copy(s.W, s.Response.Body)
+	}
 	return nil
 }
 
