@@ -31,6 +31,7 @@ type ProxyServer struct {
 	ProxyLoopTestUrl      string
 	ProxyAgent            string
 	ConnectResponseHeader []byte
+	Transport             *http.Transport
 	client                *http.Client
 }
 
@@ -66,7 +67,9 @@ func (ps *ProxyServer) getServer() (*http.Server, error) {
 		noEnvProxy = true
 	}
 	ps.client = new(http.Client)
-	if noEnvProxy {
+	if ps.Transport != nil {
+		ps.client.Transport = ps.Transport
+	} else if noEnvProxy {
 		ps.client.Transport = &http.Transport{Proxy: nil}
 	} else {
 		ps.client.Transport = http.DefaultTransport
@@ -90,7 +93,7 @@ func (ps *ProxyServer) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		Ps:      ps,
 		W:       w,
 	}
-	ps.Handler.(ProxyHandler).HandleProxy(s)
+	ps.Handler.HandleProxy(s)
 }
 
 func (ps *ProxyServer) ProxyCONNECT(w http.ResponseWriter, req *http.Request) error {
